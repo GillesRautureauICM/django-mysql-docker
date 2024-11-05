@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.10-slim-buster
+FROM python:3.12-slim
 
 # set work directory
 WORKDIR /usr/src/app
@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED 1
 
 # install mysql dependencies
 RUN apt-get update
-RUN apt-get install gcc default-libmysqlclient-dev -y
+RUN apt-get install default-libmysqlclient-dev build-essential pkg-config -y
 
 # install dependencies
 RUN pip install -U pip setuptools wheel
@@ -29,7 +29,7 @@ RUN dos2unix --newfile docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Entrypoint dependencies
-RUN apt-get install netcat -y
+RUN apt-get install netcat-traditional -y
 
 # run entrypoint.sh
 ENTRYPOINT ["bash", "/usr/local/bin/docker-entrypoint.sh"]
